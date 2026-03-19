@@ -1,9 +1,10 @@
 # Retail SME POS Data Cleaning Project
 
 ## Overview
-This project focuses on cleaning and preparing a retail Point-of-Sale (POS) dataset for analysis.  
-The goal is to transform messy, inconsistent transaction data into a structured, reliable dataset that can be used for business insights and decision-making.
----
+
+This project focuses on cleaning and preparing a retail POS dataset for analysis.
+The goal is to transform messy, inconsistent transaction data into a structured, reliable dataset that can be used for business insights and deision-making.
+
 ## Project Structure
 
 
