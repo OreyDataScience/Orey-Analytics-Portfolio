@@ -6,21 +6,11 @@ This project focuses on cleaning and preparing a retail POS dataset for analysis
 The goal is to transform messy, inconsistent transaction data into a structured, reliable dataset that can be used for business insights and deision-making.
 
 ## Project Structure
-* `data/raw/` → Original dataset
-
-retail-cleaning/
-│
-├── data/
-│ ├── raw/ # Original messy dataset
-│ └── clean/ # Cleaned and processed dataset
-│
-├── scripts/ # R scripts used for cleaning
-│
-├── outputs/ # Insight summaries and results
-│
-└── README.md # Project documentation
+* `data/raw/` → Original messy dataset
+* `data/cleaned/` → Cleaned and processed dataset
+* `scripts/` → R cleaning script
+* `outputs/` → Insight summary
 ---
-
 ## Data Cleaning Process
 
 The following steps were performed to clean the dataset:
