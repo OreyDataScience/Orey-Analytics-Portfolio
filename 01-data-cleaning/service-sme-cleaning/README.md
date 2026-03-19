@@ -1,4 +1,4 @@
-# Service-Based SME Analysis – Consulting Dataset
+# Service-based SME Analysis – Consulting Dataset
 
 ## Problem
 
