@@ -3,7 +3,6 @@
 
 Orey Analytics is a data-driven financial intelligence system designed to help SMEs monitor, predict, and improve their financial health.
  
- 
 **This portfolio showcases projects across**:
 1. Data cleaning
 2. Financial analysis
@@ -11,7 +10,6 @@ Orey Analytics is a data-driven financial intelligence system designed to help S
 4. Forecasting
 5. Dashboarding
 6. Financial health scoring
-
  
 **Core Capabilities**
 1. Transform messy financial data into structured datasets
@@ -19,7 +17,6 @@ Orey Analytics is a data-driven financial intelligence system designed to help S
 3. Build business dashboards
 4. Forecast revenue trends
 5. Identify financial risks early
- 
  
 **Project Phases**
 1. Data Cleaning:
