@@ -1,15 +1,16 @@
-#Orey Analytics – SME Financial Visualization Project
+# Orey Analytics – SME Financial Visualization Project
 
-##Project Overview
+## Project Overview
 This project provides a visual analysis of SME financial performance over three months (January–March 2026), focusing on revenue, expenses, profit, growth, and category-level performance. The visualizations and interactive dashboard are designed to support data-driven decision-making and actionable insights for operational and financial optimization.
 
-##Objectives
+## Objectives
 Track revenue and expenses trends over time
 Identify profitable and underperforming categories
 Monitor monthly growth and cash flow patterns
 Highlight cost inefficiencies and opportunities for operational improvement
 Deliver insights in a clear, executive-friendly format
-##Approach
+
+## Approach
 Data Cleaning and Preparation
 Loaded raw SME financial data (transactions, revenue, expenses, categories).
 Cleaned inconsistencies, missing values, and duplicates in Excel/R.
@@ -28,20 +29,23 @@ Executive-ready layout for decision-making
 Insight Generation
 Extracted actionable insights from visualizations and metrics.
 Prepared a 1-page executive summary highlighting revenue trends, growth patterns, category performance, cost inefficiencies, and recommendations.
-##Project Structure
 
-##Key Visualizations & Dashboard Features
+## Project Structure
+
+## Key Visualizations & Dashboard Features
 Revenue vs Expenses Over Time – Trend line showing losses and profitability
 Profit Margin by Category – Identifies high and low-margin segments
 Monthly Growth % KPI Card – Shows latest month’s growth for quick insights
 Top 3 Revenue Generating Categories – Focused view of highest-value contributors
 Expenses Breakdown by Category – Visualizes cost distribution and inefficiencies
 Power BI Dashboard – Combines all visualizations in an interactive, user-friendly format
-##Insights & Impact
+
+## Insights & Impact
 Profitability is concentrated in Marketing, while high-revenue categories remain low-margin
 March shows a return to profitability, but cost inefficiencies continue to pressure margins
 Provides actionable recommendations for cost optimization and resource reallocation
 Supports strategic decision-making with clear, executive-ready visualizations
-##Author
+
+## Author
 
 Oreneile Katlego Ncaba – Orey Analytics
