@@ -34,6 +34,10 @@ This project provides a visual analysis of SME financial performance over three 
 * Prepared a 1-page executive summary highlighting revenue trends, growth patterns, category performance, cost inefficiencies, and recommendations.
 
 ## Project Structure
+* `data/` → Clean dataset
+* dashboards/` → PowerBI dashboard
+* `scripts/` → R analysis script
+* `reports/` → Executive summary
 
 ## Key Visualizations & Dashboard Features
 1. **Revenue vs Expenses Over Time** – Trend line showing losses and profitability
