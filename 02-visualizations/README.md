@@ -35,7 +35,7 @@ This project provides a visual analysis of SME financial performance over three 
 
 ## Project Structure
 * `data/` → Clean dataset
-* dashboards/` → PowerBI dashboard
+* `dashboards/` → PowerBI dashboard
 * `scripts/` → R analysis script
 * `reports/` → Executive summary
 
