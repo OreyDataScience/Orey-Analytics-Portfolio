@@ -11,6 +11,27 @@ sales <- read_csv("Sales Dataset.csv")
 #Fix date format
 sales$Date <- as.Date(sales$Date)
 
+#Cleaning columns for PowerBI (Encountered Errors when dashboarding)
+sales <- sales %>%
+  mutate(
+    #Converting numerical values to numeric
+    Revenue = as.numeric(Revenue),
+    Cost = as.numeric(Cost),
+    Profit = as.numeric(Profit),
+    Invoice_Amount = as.numeric(Invoice_Amount),
+    Discount = as.numeric(Discount),
+    Tax = as.numeric(Tax),
+    
+    #Converting ID & Categorical variables to factors
+    Transaction_ID = as.factor(Transaction_ID),
+    Product_Category = as.factor(Product_Category),
+    Payment_Method = as.factor(Payment_Method),
+    Customer_ID = as.factor(Customer_ID),
+    Customer_Segment = as.factor(Customer_Segment),
+    Sales_Rep = as.factor(Sales_Rep),
+    Channel = as.factor(Channel)
+  )
+
 #Aggregate data to monthly
 monthly_data <- sales %>%
   mutate(Month = floor_date(Date, "month")) %>%
@@ -103,6 +124,7 @@ delay_forecast <- forecast(delay_model, h = 3)
 
 plot(delay_forecast)
 
+write_csv(sales, "Sales (Corrected).csv")
 ###############################################################################
 #Extracting Information cleanly (Not necessary)
 ###############################################################################
