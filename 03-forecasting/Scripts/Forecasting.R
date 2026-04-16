@@ -11,7 +11,7 @@ sales <- read_csv("Sales Dataset.csv")
 #Fix date format
 sales$Date <- as.Date(sales$Date)
 
-#Cleaning columns for PowerBI (Encountered Errors when dashboarding)
+#Formatting columns for PowerBI (Encountered Errors when dashboarding)
 sales <- sales %>%
   mutate(
     #Converting numerical values to numeric
