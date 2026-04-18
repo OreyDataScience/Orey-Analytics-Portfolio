@@ -164,7 +164,22 @@ delay_forecast <- forecast(delay_model, h = 3)
 
 plot(delay_forecast)
 
-write_csv(sales, "Sales (Corrected).csv")
+###############################################################################
+# Building forecast table (3 months ahead)
+###############################################################################
+
+#Extracting forecast months
+last_month <- max(monthly_data$Month)
+forecast_months <- seq(last_month %m+% months(1),
+                       by = "month", length.out = 3)
+
+#Building forecast data frame with CI
+forecast_table <- tibble(
+  Month = forecast_months,
+  Forecast_Revenue = as.numeric(forecast_values$mean),
+  Lower_CI_95 = as.numeric(forecast_values$lower[, 2]),
+  Upper_CI_95 = as.numeric(forecast_values$upper[, 2])
+)
 
 ###############################################################################
 # Forecasting Output Extraction Script (Did this just for a clean layout)
@@ -228,3 +243,11 @@ pacf_values <- pacf(ts_revenue, plot = FALSE)
 
 print(head(acf_values$acf, 10))
 print(head(pacf_values$acf, 10))
+
+###############################################################################
+#Exporting PowerBI ready datasets
+###############################################################################
+
+write_csv(risk_revenue, "PBI Risk Revenue.csv")
+write_csv(forecast_table, "PBI forecast.csv")
+write_csv(risk_clients, "PBI Risk Clients.csv")
