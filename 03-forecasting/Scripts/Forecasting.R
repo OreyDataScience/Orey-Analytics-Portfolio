@@ -4,6 +4,7 @@
 ###############################################################################
 library(tidyverse)
 library(lubridate)
+library(forecast)
 
 setwd("E:/Business/Orey Analytics/Portfolio Building/Forecasting/Clean Data")
 sales <- read_csv("Sales Dataset.csv")
@@ -75,15 +76,54 @@ plot(stl_decomp)
 #Stationarity test
 PP.test(ts_revenue)
 
-#Forecasting model
-library(forecast)
+#ACF/PACF
+par(mfrow = c(1,2))
+acf(ts_revenue, main = "ACF - Revenue")
+pacf(ts_revenue, main = "PACF - Revenue")
+par(mfrow = c(1,1))
 
-model <- auto.arima(ts_revenue, seasonal = TRUE)
+#Train/Test Split
+n <- length(ts_revenue)
+test_size <- 3
+train_end <- n - test_size
+
+ts_train <- window(ts_revenue, end = time(ts_revenue)[train_end])
+ts_test  <- window(ts_revenue, start = time(ts_revenue)[train_end + 1])
+
+#Model (Train)
+model <- auto.arima(ts_train, seasonal = TRUE)
 summary(model)
 
+#Residual Diagnostics
+checkresiduals(model)
+
+#Forecast on Test set
+fc_test <- forecast(model, h = test_size)
+
+#Accuracy
+acc <- accuracy(fc_test, ts_test)
+
+#Final model on full data
+model_full <- auto.arima(ts_revenue, seasonal = TRUE)
+summary(model_full)
+
 #Forecast
-forecast_values <- forecast(model, h = 3)
+forecast_values <- forecast(model_full, h = 3)
 plot(forecast_values)
+
+#Profit forecast
+ts_profit <- ts(monthly_data$Profit,
+                start = c(year(min(monthly_data$Month)),
+                          month(min(monthly_data$Month))),
+                frequency = 12)
+
+profit_model <- auto.arima(ts_profit, seasonal = TRUE)
+profit_forecast <- forecast(profit_model, h = 3)
+
+plot(profit_forecast,
+     main = "Profit Forecast",
+     ylab = "Profit",
+     xlab = "Time")
 
 #Client payment delay risk
 client_risk <- sales %>%
@@ -125,74 +165,66 @@ delay_forecast <- forecast(delay_model, h = 3)
 plot(delay_forecast)
 
 write_csv(sales, "Sales (Corrected).csv")
+
 ###############################################################################
-#Extracting Information cleanly (Not necessary)
+# Forecasting Output Extraction Script (Did this just for a clean layout)
 ###############################################################################
-# Forecast
+
+# 1. Forecast Outputs
 forecast_df <- data.frame(forecast_values)
+print(forecast_df)
 
-# Growth
+profit_df <- data.frame(profit_forecast)
+print(profit_forecast)
+
+delay_df <- data.frame(delay_forecast)
+print(delay_df)
+
+# 2. Growth and Trend Insights
 latest_growth <- tail(monthly_data$Growth, 1)
+print(latest_growth)
 
-# Trend
 recent_trend <- tail(monthly_data$MA_3, 6)
-view(recent_trend)
+print(recent_trend)
 
-#Seasonality Insight (STL decomposition)
-stl_decomp$time.series
+# 3. Seasonality insight (STL Decomposition)
+print(stl_decomp$time.series)
 
-# Risk distribution (clients)
+# 4. Client risk distribution
 risk_clients <- client_risk %>%
   count(Risk_Flag) %>%
   mutate(Percentage = n / sum(n) * 100)
+print(risk_clients)
 
-# Risk distribution (revenue)
 risk_revenue <- client_risk %>%
   group_by(Risk_Flag) %>%
   summarise(Total_Revenue = sum(Total_Revenue)) %>%
   mutate(Revenue_Share = Total_Revenue / sum(Total_Revenue) * 100)
+print(risk_revenue)
 
-# Delay forecast
-delay_df <- data.frame(delay_forecast)
-view(delay_df)
+# 5. Model performance metrics
+acc <- accuracy(fc_test, ts_test)
+print(acc)
 
-# Show outputs
-forecast_df
-latest_growth
-risk_clients
-risk_revenue
-delay_df
+checkresiduals(model)
 
-###############################################################################
-#Insight Summary Notes
-###############################################################################
-summary_text <- "
-Forecasting Sales - Insight Summary
+# 6. Forecast vs Actual Comparison
+comparison <- data.frame(
+  Actual = as.numeric(ts_test),
+  Forecast = as.numeric(fc_test$mean)
+)
 
-Overview
-Built a mini financial intelligence system:
+comparison <- comparison %>%
+  mutate(
+    Error = Actual - Forecast,
+    Error_Percent = Error / Actual * 100
+  )
 
-1. Descriptive layer: Revenue, profit, delays and Monthly aggregation
-2. Diagnostic layer: Growth rates Trend and seasonality
-3. Predictive layer: Revenue forecasts and Delay forecasts
-4. Risk layer: Customer risk scoring and Revenue exposure to risk
+print(comparison)
 
-Notes
-- Preparing raw transaction data to become time intelligence → the foundation of forecasting.
-- Transformed transaction data into Monthly financial performance view.
-- Turned revenue into something that can predict the future not just describing the past.
-- Visualized the time series and added a moving average trend to smooth out the noise and create a true revenue trend signal.
-- Calculated the month-over-month growth rate.
-- Broke revenue into trend, seasonality and residual.
-- Tested if the series is stationary because the ARIMA model requires stationarity. Allows me to test if data is stable enough trust predictions.
-- Built a time-series forecasting model (ARIMA) whichis my core predictive engine.
-- Predicted the next 3 months for cashflow management and short-term planning such as hiring, budgeting and risk anticipation.
-- Created a customer risk scoring model based on payment behavior with the following metrics built, Average and Max delay, revenue contribution and late payment rate.
-- Grouped by risk enabling smarter credit policies and client prioritization.
-- Created a time series for payment delays and forecasted it predicting future cashflow risk.
+# 7. ACF/PACF Analysis
+acf_values <- acf(ts_revenue, plot = FALSE)
+pacf_values <- pacf(ts_revenue, plot = FALSE)
 
-Conclusion
-Built a mini fiancial intelligence system that helps SMEs predict revenue, detect risk, and prevent cash flow failure (Forecasting, Risk modeling and Business Insights)
-"
-
-writeLines(summary_text, "Sales Forecasting Insight Summary.txt") 
+print(head(acf_values$acf, 10))
+print(head(pacf_values$acf, 10))
