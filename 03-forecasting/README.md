@@ -220,13 +220,6 @@ It delivers a **practical financial intelligence system** aligned with the visio
 
 ---
 
-## Next Steps
-
-- Extend forecast horizon (6–12 months)  
-- Introduce **machine learning models (XGBoost, Prophet)**  
-- Build **real-time data pipelines**  
-- Develop **SME Financial Health Index (Orey Analytics product)**  
-
 ## Author
 
 Oreneile Katlego Ncaba – Orey Analytics
